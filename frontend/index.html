@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login/Signup</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="top-bar">
+    <div class="logo-slot">
+      <img id="logo-img" src="property (1).png" alt="Logo" />
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <svg id="sun" class="icon hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 4V2m0 20v-2m8.66-8.66l1.42 1.42M4.93 4.93l1.42 1.42M21 12h2M1 12h2m2.05 7.07l1.42-1.42M17.66 6.34l1.42-1.42M12 8a4 4 0 100 8 4 4 0 000-8z" />
+      </svg>
+      <svg id="moon" class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="auth-container">
+    <h2>Log in or sign up</h2>
+    <form id="signupForm" onsubmit="return validateSignupForm(event)">
+      <h3>Welcome to Our Platform</h3>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="text" id="pan" placeholder="PAN (10 characters)" maxlength="10" required />
+      <input type="text" id="aadhar" placeholder="Aadhar (12 digits)" maxlength="12" required />
+      <button type="submit" class="main-btn">Continue</button>
+      <p class="error" id="errorMsg"></p>
+    </form>
+
+    <div class="divider"><span>or</span></div>
+    <div class="social-buttons">
+      <button class="social-btn google">
+        <img src="https://img.icons8.com/color/24/google-logo.png" alt="Google" />
+        Continue with Google
+      </button>
+      <button class="social-btn email">
+        <img src="https://img.icons8.com/ios-glyphs/24/email.png" alt="Email" />
+        Continue with email
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark-theme");
+      const isDark = body.classList.contains("dark-theme");
+
+      // Toggle icons
+      document.getElementById("sun").classList.toggle("hidden", !isDark);
+      document.getElementById("moon").classList.toggle("hidden", isDark);
+
+      // Toggle logo
+      const logo = document.getElementById("logo-img");
+      logo.src = isDark ? "property.png" : "property (1).png";
+    }
+
+    document.getElementById('aadhar').addEventListener('keypress', function (e) {
+      if (!/\d/.test(e.key)) e.preventDefault();
+    });
+
+    function validateEmail(email) {
+      return /^[\w.-]+@[\w.-]+\.com$/.test(email);
+    }
+
+    function validatePAN(pan) {
+      return /^[A-Z0-9]{10}$/.test(pan);
+    }
+
+    function validateAadhar(aadhar) {
+      return /^\d{12}$/.test(aadhar);
+    }
+
+    function validateSignupForm(event) {
+      const email = document.getElementById('email').value;
+      const pan = document.getElementById('pan').value.toUpperCase();
+      const aadhar = document.getElementById('aadhar').value;
+      const error = document.getElementById('errorMsg');
+
+      if (!validateEmail(email)) {
+        error.textContent = 'Email must end with .com';
+        event.preventDefault();
+        return false;
+      }
+      if (!validatePAN(pan)) {
+        error.textContent = 'PAN must be 10 alphanumeric characters';
+        event.preventDefault();
+        return false;
+      }
+      if (!validateAadhar(aadhar)) {
+        error.textContent = 'Aadhar must be exactly 12 digits';
+        event.preventDefault();
+        return false;
+      }
+
+      error.textContent = '';
+      return true;
+    }
+  </script>
+</body>
+</html>

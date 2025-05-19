@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brigade Eternia - Property Listing</title>
+  <link rel="stylesheet" href="insidep.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo">MyStay</div>
+    <div class="profile-icons">
+      <i class="fas fa-bell"></i>
+      <i class="fas fa-envelope"></i>
+      <i class="fas fa-user-circle"></i>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section with Image and Floating Booking -->
+    <section class="hero">
+      <img src="https://newprojects.99acres.com/projects/brigade_enterprises_bengaluru/brigade_eternia/images/jf5jmal_1745410243_589400077_optOrig.jpg" alt="Brigade Eternia"/>
+      <div class="floating-book">
+        <div class="price">From 1.2 cr</div>
+        <button class="book-now">Invest Now!</button>
+      </div>
+    </section>
+
+    <!-- Tabs Navigation -->
+    <section class="tabs">
+      <button class="tab active" onclick="showTab('reviews')">Reviews</button>
+      <button class="tab" onclick="showTab('amenities')">Amenities</button>
+      <button class="tab" onclick="showTab('map')">Map</button>
+    </section>
+
+    <!-- Tab Contents -->
+    <section class="tab-content" id="reviews">
+      <h2>Reviews</h2>
+      <p>"A promising upcoming property with great potential." - Local Resident</p>
+      <p>"Trusted builder and prime location!" - Real Estate Analyst</p>
+    </section>
+
+    <section class="tab-content hidden" id="amenities">
+      <h2>Amenities</h2>
+      <ul>
+        <li>Swimming Pool</li>
+        <li>Gymnasium</li>
+        <li>Club House</li>
+        <li>14 Towers, 14 Floors</li>
+        <li>1124 Units in 14 Acres</li>
+      </ul>
+    </section>
+
+    <section class="tab-content hidden" id="map">
+      <h2>Map</h2>
+      <iframe 
+        src="https://maps.google.com/maps?q=Yelahanka%20Bangalore&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+        width="100%" 
+        height="300" 
+        frameborder="0" 
+        style="border:0;" 
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <!-- Property Description -->
+    <section class="tab-content">
+      <h2>Property Overview</h2>
+      <p><strong>Name:</strong> Brigade Eternia</p>
+      <p><strong>Type:</strong> Apartment</p>
+      <p><strong>Location:</strong> Yelahanka, Bangalore</p>
+      <p><strong>Status:</strong> Available</p>
+      <p><strong>Description:</strong><br>For those looking to buy a residential property, here comes one of the choicest offerings in Bangalore North, at Yelahanka. Brought to you by Brigade Group, Brigade Eternia is among the newest addresses for homebuyers. There are apartments for sale in Brigade Eternia Yelahanka, Bangalore. This is a new launch project right now, and is expected to be delivered by Mar, 2030.<br><br>
+      Brigade Eternia Bangalore North is a RERA-registered housing society, which means all project details are also available on the state RERA website. RERA Reg. No: PRM/KA/RERA/1251/309/PR/070325/007559.</p>
+    </section>
+  </main>
+
+  <script>
+    function showTab(tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      const tabs = document.querySelectorAll('.tab');
+      contents.forEach(content => content.classList.add('hidden'));
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelector(`.tab[onclick*='${tabId}']`).classList.add('active');
+    }
+  </script>
+</body>
+</html>

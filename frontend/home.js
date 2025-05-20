@@ -35,7 +35,7 @@ async function loadProperties() {
 
       // Card click -> redirect
       card.addEventListener('click', () => {
-        window.location.href = `/frontend/insedep.htm/?${property._id}`;
+        window.location.href = `/frontend/insidep.html?id=${property._id}`;
       });
 
       container.appendChild(card);

@@ -70,7 +70,7 @@ app.post('/api/users/login', async (req, res) => {
 app.get('/api/users/:id', auth, async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select('-passwordHash');
-    res.json(user);
+    res.status(200).json({"data":user});
   } catch (err) {
     res.status(404).json({ message: 'User not found' });
   }
@@ -101,8 +101,14 @@ app.get('/api/properties/:id', async (req, res) => {
 app.post('/api/investments', auth, async (req, res) => {
   try {
     const { property, amountInvested, sharesPercent } = req.body;
+    const user = await Investment.findOne({ user: req.user.id});
+    const properties = await Investment.findOne({property : property});
+    if(user && properties){
+      return res.status(401).json({"data" : "User inveted in the property"});
+    }
+  
     const investment = await Investment.create({ user: req.user.id, property, amountInvested, sharesPercent });
-    res.status(201).json(investment);
+    return res.status(201).json(investment);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

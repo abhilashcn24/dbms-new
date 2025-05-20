@@ -73,7 +73,7 @@ document.getElementById('authForm').addEventListener('submit', async function (e
     error.textContent = '';
 
     // Store token and redirect
-    localStorage.setItem('token', data);
+    localStorage.setItem('token', JSON.stringify(data));
     alert(`${mode === 'signup' ? 'Signup' : 'Login'} successful! Welcome, ${data.user.name}`);
     window.location.href = '/frontend/home.html'; // Change to your homepage or dashboard
 

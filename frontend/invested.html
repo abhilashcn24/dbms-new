@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invest in Property</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f7;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background-color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar img {
+      height: 40px;
+    }
+
+    .profile {
+      background: #eee;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    form {
+      max-width: 600px;
+      background-color: #fff;
+      margin: 4rem auto;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    form h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #111;
+      font-size: 1.8rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.85rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #e63946;
+      outline: none;
+    }
+
+    input[readonly] {
+      background-color: #f3f3f3;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #e63946;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #d62839;
+    }
+
+    #responseMsg {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #2a9d8f;
+    }
+    .error{
+        color: red;
+    }
+    .success{
+        color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="/frontend/home.html"><img src="property (1).png" alt="Logo" /></a>
+    <a href="/frontend/invsetpro.htm" class="profile">
+      <span>Account</span>
+    </a>
+  </div>
+
+  <form id="investmentForm">
+    <h2>Property Investment Checkout</h2>
+
+    <input type="text" id="propertyName" placeholder="Property Name" readonly />
+    <input type="text" id="propertyArea" placeholder="Property Area" readonly />
+    <input type="text" id="propertyPrice" placeholder="Current Price (₹)" readonly />
+
+    <input type="text" id="property" placeholder="Property ID" readonly required />
+    <input type="text" id="amountInvested" placeholder="Amount Invested (₹)"   />
+    <input type="text" id="sharesPercent" placeholder="Shares Percent (%)" readonly required />
+
+    <button type="submit" id="submit">Invest Now</button>
+    <p id="responseMsg"></p>
+  </form>
+
+  <script src="invested.js"></script>
+</body>
+</html>

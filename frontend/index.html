@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login/Signup</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="top-bar">
+    <div class="logo-slot">
+      <img id="logo-img" src="property (1).png" alt="Logo" />
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <svg id="sun" class="icon hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 4V2m0 20v-2m8.66-8.66l1.42 1.42M4.93 4.93l1.42 1.42M21 12h2M1 12h2m2.05 7.07l1.42-1.42M17.66 6.34l1.42-1.42M12 8a4 4 0 100 8 4 4 0 000-8z" />
+      </svg>
+      <svg id="moon" class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="auth-container">
+    <h2 id="form-title">Sign Up</h2>
+
+    <div class="toggle-buttons">
+      <button type="button" onclick="switchMode('signup')" id="signupBtn" class="active">Sign Up</button>
+      <button type="button" onclick="switchMode('login')" id="loginBtn">Log In</button>
+    </div>
+
+    <form id="authForm" onsubmit="return handleSubmit(event)">
+      <input type="text" id="name"  name="name" placeholder="Full Name" required />
+
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+
+      <div id="signupFields">
+        <input type="text" id="pan" name="pan" placeholder="PAN (10 characters)" maxlength="10" required />
+        <input type="text" id="aadhar" name="aadhar" placeholder="Aadhar (12 digits)" maxlength="12" required />
+      </div>
+
+      <button type="submit" class="main-btn">Continue</button>
+      <p class="error" id="errorMsg"></p>
+    </form>
+
+    <div class="divider"><span>or</span></div>
+    <div class="social-buttons">
+      <button class="social-btn google">
+        <img src="https://img.icons8.com/color/24/google-logo.png" alt="Google" />
+        Continue with Google
+      </button>
+      <button class="social-btn email">
+        <img src="https://img.icons8.com/ios-glyphs/24/email.png" alt="Email" />
+        Continue with Email
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentMode = 'signup';
+
+// Toggle light/dark theme and icon + logo swap
+function toggleTheme() {
+  const body = document.body;
+  body.classList.toggle("dark-theme");
+  const isDark = body.classList.contains("dark-theme");
+  document.getElementById("sun").classList.toggle("hidden", !isDark);
+  document.getElementById("moon").classList.toggle("hidden", isDark);
+  document.getElementById("logo-img").src = isDark ? "property.png" : "property (1).png";
+}
+
+// Switch between signup and login modes
+function switchMode(mode) {
+  currentMode = mode;
+  const isSignup = mode === 'signup';
+
+  document.getElementById("form-title").textContent = isSignup ? "Sign Up" : "Log In";
+  document.getElementById("signupFields").style.display = isSignup ? "block" : "none";
+  document.getElementById("name").style.display = isSignup ? "block" : "none";
+
+  document.getElementById("signupBtn").classList.toggle("active", isSignup);
+  document.getElementById("loginBtn").classList.toggle("active", !isSignup);
+
+  document.getElementById("errorMsg").textContent = '';
+
+  // Set or unset required attribute to avoid validation error on hidden inputs
+  const nameInput = document.getElementById('name');
+  const panInput = document.getElementById('pan');
+  const aadharInput = document.getElementById('aadhar');
+
+  if (isSignup) {
+    nameInput.required = true;
+    panInput.required = true;
+    aadharInput.required = true;
+  } else {
+    nameInput.required = false;
+    panInput.required = false;
+    aadharInput.required = false;
+  }
+}
+
+// Validate email ends with .com
+function validateEmail(email) {
+  return /^[\w.-]+@[\w.-]+\.com$/.test(email);
+}
+
+// Validate PAN: 10 alphanumeric uppercase characters
+function validatePAN(pan) {
+  return /^[A-Z0-9]{10}$/.test(pan);
+}
+
+// Validate Aadhaar: exactly 12 digits
+function validateAadhar(aadhar) {
+  return /^\d{12}$/.test(aadhar);
+}
+
+// Restrict Aadhaar input to digits only
+document.getElementById('aadhar').addEventListener('keypress', function (e) {
+  if (!/\d/.test(e.key)) e.preventDefault();
+});
+
+// Handle form submit (basic client-side validation, add your backend call here)
+function handleSubmit(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const pan = document.getElementById('pan').value.toUpperCase().trim();
+  const aadhar = document.getElementById('aadhar').value.trim();
+  const error = document.getElementById('errorMsg');
+
+  if (!validateEmail(email)) {
+    error.textContent = 'Email must end with .com';
+    return false;
+  }
+
+  if (currentMode === 'signup') {
+    if (!name) {
+      error.textContent = 'Name is required';
+      return false;
+    }
+    if (!validatePAN(pan)) {
+      error.textContent = 'PAN must be 10 alphanumeric characters';
+      return false;
+    }
+    if (!validateAadhar(aadhar)) {
+      error.textContent = 'Aadhaar must be exactly 12 digits';
+      return false;
+    }
+  }
+
+  error.textContent = '';
+
+  // Replace this alert with your real signup/login logic
+  alert(`${currentMode === 'signup' ? 'Signup' : 'Login'} successful!`);
+
+  return true;
+}
+
+// Initialize form to signup mode on page load
+switchMode('signup');
+
+  </script>
+
+  
+  <script src="auth.js"></script>
+</body>
+</html>

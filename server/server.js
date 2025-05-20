@@ -67,6 +67,7 @@ app.post('/api/users/login', async (req, res) => {
 });
 
 
+
 app.get('/api/users/:id', auth, async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select('-passwordHash');
